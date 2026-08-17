@@ -1,0 +1,218 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  macos:
+    name: Package macOS (Apple silicon)
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: 1.25.12
+          cache-dependency-path: go.sum
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.15.0
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          pnpm --dir frontend install --frozen-lockfile
+          go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Verify source
+        shell: bash
+        run: |
+          pnpm --dir frontend build
+          go test ./...
+          go vet ./...
+          pnpm --dir frontend check
+          pnpm --dir frontend test
+
+      - name: Build application
+        shell: bash
+        run: wails build -clean -platform darwin/arm64 -trimpath
+
+      - name: Sign and package application
+        shell: bash
+        run: |
+          codesign --force --deep --sign - build/bin/codex-claude-shuttle.app
+          codesign --verify --deep --strict --verbose=2 build/bin/codex-claude-shuttle.app
+          mkdir -p dist
+          ditto -c -k --keepParent --sequesterRsrc \
+            build/bin/codex-claude-shuttle.app \
+            dist/Codex-Claude-Shuttle-macOS-arm64.zip
+          cd dist
+          shasum -a 256 Codex-Claude-Shuttle-macOS-arm64.zip > SHA256SUMS-macOS.txt
+
+      - name: Upload macOS package
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-macos
+          path: |
+            dist/Codex-Claude-Shuttle-macOS-arm64.zip
+            dist/SHA256SUMS-macOS.txt
+          if-no-files-found: error
+          retention-days: 7
+
+  windows:
+    name: Package Windows (x64)
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: 1.25.12
+          cache-dependency-path: go.sum
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.15.0
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          pnpm --dir frontend install --frozen-lockfile
+          go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Verify source
+        shell: bash
+        run: |
+          pnpm --dir frontend build
+          go test ./...
+          go vet ./...
+          pnpm --dir frontend check
+          pnpm --dir frontend test
+
+      - name: Build installer
+        shell: bash
+        run: wails build -clean -platform windows/amd64 -nsis -installscope user -trimpath
+
+      - name: Prepare Windows package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          $installer = Get-ChildItem -Path build/bin -Filter '*-amd64-installer.exe' | Select-Object -First 1
+          if (-not $installer) { throw 'Wails did not produce an x64 NSIS installer.' }
+          $output = 'dist/Codex-Claude-Shuttle-Windows-x64-Setup.exe'
+          Copy-Item $installer.FullName $output
+          $hash = (Get-FileHash -Algorithm SHA256 $output).Hash.ToLowerInvariant()
+          "$hash  Codex-Claude-Shuttle-Windows-x64-Setup.exe" | Set-Content -Encoding ascii dist/SHA256SUMS-Windows.txt
+
+      - name: Upload Windows package
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-windows
+          path: |
+            dist/Codex-Claude-Shuttle-Windows-x64-Setup.exe
+            dist/SHA256SUMS-Windows.txt
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Publish GitHub Release
+    needs:
+      - macos
+      - windows
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download release packages
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+
+      - name: Combine checksums
+        shell: bash
+        run: cat dist/SHA256SUMS-macOS.txt dist/SHA256SUMS-Windows.txt > dist/SHA256SUMS.txt
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          notes="docs/releases/${GITHUB_REF_NAME}.md"
+          assets=(
+            dist/Codex-Claude-Shuttle-macOS-arm64.zip
+            dist/Codex-Claude-Shuttle-Windows-x64-Setup.exe
+            dist/SHA256SUMS.txt
+          )
+
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "${assets[@]}" \
+              --repo "$GITHUB_REPOSITORY" \
+              --clobber
+            if [[ -f "$notes" ]]; then
+              gh release edit "$GITHUB_REF_NAME" \
+                --repo "$GITHUB_REPOSITORY" \
+                --title "Codex Claude Shuttle ${GITHUB_REF_NAME}" \
+                --notes-file "$notes"
+            else
+              gh release edit "$GITHUB_REF_NAME" \
+                --repo "$GITHUB_REPOSITORY" \
+                --title "Codex Claude Shuttle ${GITHUB_REF_NAME}"
+            fi
+          elif [[ -f "$notes" ]]; then
+            gh release create "$GITHUB_REF_NAME" \
+              "${assets[@]}" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Codex Claude Shuttle ${GITHUB_REF_NAME}" \
+              --notes-file "$notes" \
+              --verify-tag
+          else
+            gh release create "$GITHUB_REF_NAME" \
+              "${assets[@]}" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Codex Claude Shuttle ${GITHUB_REF_NAME}" \
+              --generate-notes \
+              --verify-tag
+          fi

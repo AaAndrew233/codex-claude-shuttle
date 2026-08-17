@@ -1,0 +1,38 @@
+.DS_Store
+.idea/
+.vscode/
+
+# Go
+/bin/
+/coverage/
+*.coverprofile
+
+# Wails
+/build/bin/
+
+# Frontend
+/frontend/node_modules/
+/frontend/dist/
+/frontend/coverage/
+/frontend/.svelte-kit/
+/frontend/package.json.md5
+
+# Local state and secrets
+.env
+.env.*
+!.env.example
+*.log
+*.codexbundle
+*.age
+
+# Test output
+/test-results/
+/playwright-report/
+
+# Local design exploration artifacts
+/设计原型/图片资产/过程图/
+/设计原型/实现截图/
+
+# Local QA and agent state
+/.gstack/
+/frontend/qa/
