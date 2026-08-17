@@ -207,6 +207,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --title "Codex Claude Shuttle ${GITHUB_REF_NAME}" \
               --notes-file "$notes" \
+              --prerelease \
               --verify-tag
           else
             gh release create "$GITHUB_REF_NAME" \
@@ -214,5 +215,6 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --title "Codex Claude Shuttle ${GITHUB_REF_NAME}" \
               --generate-notes \
+              --prerelease \
               --verify-tag
           fi

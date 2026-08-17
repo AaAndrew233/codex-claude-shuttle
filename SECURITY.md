@@ -2,11 +2,11 @@
 
 ## Supported Versions
 
-Codex Claude Shuttle is currently a source preview. No production-ready release is supported yet. Security fixes are applied to the latest commit on the default branch; older commits and unofficial binaries are not supported.
+Codex Claude Shuttle is currently a public preview, not a production-ready release. Security fixes are applied to the latest preview and the latest commit on the default branch; older previews and unofficial binaries are not supported.
 
 The current code supports local Codex and Claude Code discovery, transfer-package export, and preflighted same-tool or cross-tool import. Automated tests use synthetic temporary directories. Physical Windows acceptance, real-data write acceptance, and real Claude Code continuation acceptance are still pending.
 
-Back up existing conversation data and test with non-critical conversations before using a source build.
+The official preview packages are published only through this repository's Releases page. Back up existing conversation data and test with non-critical conversations before using a preview package or source build.
 
 ## Reporting a Vulnerability
 
