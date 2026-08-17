@@ -179,7 +179,7 @@ func (client *client) initialize() (string, string, error) {
 		CodexHome string `json:"codexHome"`
 	}
 	if err := client.call("initialize", map[string]any{
-		"clientInfo":   map[string]string{"name": "codex-claude-shuttle", "version": "0.1.1"},
+		"clientInfo":   map[string]string{"name": "codex-claude-shuttle", "version": "0.1.2"},
 		"capabilities": map[string]bool{"experimentalApi": true},
 	}, &result); err != nil {
 		return "", "", fmt.Errorf("初始化 Codex 原生服务失败: %w", err)

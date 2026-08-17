@@ -13,7 +13,7 @@
   "info": {
     "companyName": "Codex Claude Shuttle Contributors",
     "productName": "Codex Claude Shuttle",
-    "productVersion": "0.1.1",
+    "productVersion": "0.1.2",
     "copyright": "Copyright 2026 Codex Claude Shuttle Contributors",
     "comments": "Unofficial local-first conversation transfer for Codex and Claude Code"
   }
