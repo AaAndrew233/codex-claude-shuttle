@@ -118,6 +118,17 @@ jobs:
           go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0
           echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
 
+      - name: Install NSIS
+        shell: pwsh
+        run: |
+          choco install nsis --yes --no-progress
+          $nsisPath = Join-Path ${env:ProgramFiles(x86)} 'NSIS'
+          $makeNsis = Join-Path $nsisPath 'makensis.exe'
+          if (-not (Test-Path $makeNsis)) {
+            throw "NSIS installation did not provide makensis.exe at $makeNsis"
+          }
+          $nsisPath | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Verify source
         shell: bash
         run: |

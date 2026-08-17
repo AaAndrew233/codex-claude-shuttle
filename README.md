@@ -17,14 +17,14 @@
 
 ## Download
 
-`v0.1.0` is an early public preview. Back up your current conversation data and test with non-critical conversations first.
+`v0.1.1` is an early public preview. Back up your current conversation data and test with non-critical conversations first.
 
 | Platform | Preview download | Current status |
 | --- | --- | --- |
-| macOS Apple silicon | [App ZIP](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.0/Codex-Claude-Shuttle-macOS-arm64.zip) | Self-signed; not Apple-notarized |
-| Windows x64 | [Setup EXE](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.0/Codex-Claude-Shuttle-Windows-x64-Setup.exe) | Unsigned; CI-built, physical-device acceptance pending |
+| macOS Apple silicon | [App ZIP](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.1/Codex-Claude-Shuttle-macOS-arm64.zip) | Self-signed; not Apple-notarized |
+| Windows x64 | [Setup EXE](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.1/Codex-Claude-Shuttle-Windows-x64-Setup.exe) | Unsigned; CI-built, physical-device acceptance pending |
 
-Download [SHA256SUMS.txt](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.0/SHA256SUMS.txt) with the installer and verify it before opening the app. See the [v0.1.0 release notes](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/tag/v0.1.0) for the complete preview boundary.
+Download [SHA256SUMS.txt](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.1/SHA256SUMS.txt) with the installer and verify it before opening the app. See the [v0.1.1 release notes](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/tag/v0.1.1) for the complete preview boundary.
 
 Intel Mac and Linux builds are not available. macOS or Windows may show an unknown-developer warning because the preview packages do not yet use commercial code signing.
 

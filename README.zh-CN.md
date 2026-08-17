@@ -17,14 +17,14 @@
 
 ## 下载
 
-`v0.1.0` 是早期公开预览版。使用前请备份现有对话数据，并优先用非关键对话测试。
+`v0.1.1` 是早期公开预览版。使用前请备份现有对话数据，并优先用非关键对话测试。
 
 | 平台 | 预览版下载 | 当前状态 |
 | --- | --- | --- |
-| macOS Apple 芯片 | [应用 ZIP](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.0/Codex-Claude-Shuttle-macOS-arm64.zip) | 本地自签名，尚未通过 Apple 公证 |
-| Windows x64 | [安装程序 EXE](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.0/Codex-Claude-Shuttle-Windows-x64-Setup.exe) | 未签名；CI 构建通过，实体机验收待完成 |
+| macOS Apple 芯片 | [应用 ZIP](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.1/Codex-Claude-Shuttle-macOS-arm64.zip) | 本地自签名，尚未通过 Apple 公证 |
+| Windows x64 | [安装程序 EXE](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.1/Codex-Claude-Shuttle-Windows-x64-Setup.exe) | 未签名；CI 构建通过，实体机验收待完成 |
 
-下载应用时请同时下载 [SHA256SUMS.txt](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.0/SHA256SUMS.txt)，并在打开应用前核对文件。完整预览边界见 [v0.1.0 发布说明](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/tag/v0.1.0)。
+下载应用时请同时下载 [SHA256SUMS.txt](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/download/v0.1.1/SHA256SUMS.txt)，并在打开应用前核对文件。完整预览边界见 [v0.1.1 发布说明](https://github.com/giraffegzy-bot/codex-claude-shuttle/releases/tag/v0.1.1)。
 
 暂不提供 Intel Mac 和 Linux 版本。预览包尚未使用商业代码签名，macOS 或 Windows 可能显示未知开发者警告。
 

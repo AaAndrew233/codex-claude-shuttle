@@ -22,7 +22,7 @@ import (
 
 const (
 	applicationName    = "Codex Claude Shuttle"
-	applicationVersion = "0.1.0"
+	applicationVersion = "0.1.1"
 )
 
 // ApplicationInfo 是前端启动时可读取的非敏感应用元数据。
