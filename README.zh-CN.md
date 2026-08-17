@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="build/appicon.png" width="112" alt="Codex Claude Shuttle 应用图标">
+  <img src="frontend/public/assets/home/mole-courier-v2.png" width="112" alt="Codex Claude Shuttle 小鼹鼠搬运员吉祥物">
   <h1>Codex Claude Shuttle</h1>
   <p><strong>在不同电脑之间，或在 OpenAI Codex 与 Anthropic Claude Code 之间迁移本地对话。</strong></p>
   <p>无需云服务 · 无需部署服务器 · 无需产品账号 · 日常使用无需命令行</p>

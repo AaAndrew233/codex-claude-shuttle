@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="build/appicon.png" width="112" alt="Codex Claude Shuttle app icon">
+  <img src="frontend/public/assets/home/mole-courier-v2.png" width="112" alt="Codex Claude Shuttle mole courier mascot">
   <h1>Codex Claude Shuttle</h1>
   <p><strong>Move local conversations across computers or between OpenAI Codex and Anthropic Claude Code.</strong></p>
   <p>No cloud service · No server deployment · No product account · No CLI for everyday use</p>
