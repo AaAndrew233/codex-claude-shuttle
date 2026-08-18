@@ -28,8 +28,8 @@ importers:
         specifier: 5.4.2
         version: 5.4.2(svelte@5.55.7)(vite@8.1.5)(vitest@4.1.10(jsdom@30.0.1)(vite@8.1.5))
       '@tsconfig/svelte':
-        specifier: 5.0.0
-        version: 5.0.0
+        specifier: 5.0.8
+        version: 5.0.8
       jsdom:
         specifier: 30.0.1
         version: 30.0.1
@@ -312,8 +312,8 @@ packages:
       vitest:
         optional: true
 
-  '@tsconfig/svelte@5.0.0':
-    resolution: {integrity: sha512-iu5BqFjU0+OcLTNQp7fHe6Bf6zdNeJ9IZjLZMqWLuGzVFm/xx+lm//Tf6koPyRmxo55/Snm6RRQ990n89cRKFw==}
+  '@tsconfig/svelte@5.0.8':
+    resolution: {integrity: sha512-UkNnw1/oFEfecR8ypyHIQuWYdkPvHiwcQ78sh+ymIiYoF+uc5H1UBetbjyqT+vgGJ3qQN6nhucJviX6HesWtKQ==}
 
   '@tybys/wasm-util@0.10.3':
     resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
@@ -1142,7 +1142,7 @@ snapshots:
       vite: 8.1.5
       vitest: 4.1.10(jsdom@30.0.1)(vite@8.1.5)
 
-  '@tsconfig/svelte@5.0.0': {}
+  '@tsconfig/svelte@5.0.8': {}
 
   '@tybys/wasm-util@0.10.3':
     dependencies:
